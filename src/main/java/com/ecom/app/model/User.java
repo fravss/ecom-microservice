@@ -19,6 +19,8 @@ public class User {
     private String email;
     private String phone;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.COSTUMER;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
