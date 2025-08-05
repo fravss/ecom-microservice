@@ -50,6 +50,11 @@ public class ProductService {
                 }).orElse(false);
     }
 
+    public List<ProductResponse> searchProducts(String keyword) {
+        return productRepository.searchProducts(keyword).stream()
+                .map(this::mapToProductResponse)
+                .collect(Collectors.toList());
+    }
 
 
     public Optional<ProductResponse> getProductById(String id) {
