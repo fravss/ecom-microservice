@@ -2,12 +2,15 @@ package com.ecom.app.controller;
 
 
 import com.ecom.app.dto.CartItemRequest;
+import com.ecom.app.model.CartItem;
 import com.ecom.app.service.CartService.CartService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -30,5 +33,11 @@ public class CartController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CartItem>> getCart(
+            @RequestHeader("X-User-ID") String userId) {
+        return ResponseEntity.ok(cartService.getCart(userId));
     }
 }
