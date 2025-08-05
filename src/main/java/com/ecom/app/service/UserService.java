@@ -1,7 +1,9 @@
 package com.ecom.app.service;
 
 import com.ecom.app.dto.AddressDTO;
+import com.ecom.app.dto.UserRequest;
 import com.ecom.app.dto.UserResponse;
+import com.ecom.app.model.Address;
 import com.ecom.app.model.User;
 import com.ecom.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +24,11 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void addUser(User userRequest){
+    public void addUser(UserRequest userRequest){
 
-
-
-        userRepository.save(userRequest);
+        User user = new User();
+        updateUserFromRequest(user, userRequest);
+        userRepository.save(user);
     }
 
     public UserResponse mapToUserResponse(User user){
@@ -49,5 +51,20 @@ public class UserService {
         }
 
         return userResponse;
+    }
+
+    private void updateUserFromRequest(User user, UserRequest userRequest) {
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
+        user.setPhone(userRequest.getPhone());
+        if (userRequest.getAddress() != null) {
+            Address address = new Address();
+            address.setStreet(userRequest.getAddress().getStreet());
+            address.setState(userRequest.getAddress().getState());
+            address.setZip(userRequest.getAddress().getZip());
+            address.setCity(userRequest.getAddress().getCity());
+            address.setCountry(userRequest.getAddress().getCountry());
+            user.setAddress(address);
+        }
     }
 }

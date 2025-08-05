@@ -1,7 +1,7 @@
 package com.ecom.app.controller;
 
+import com.ecom.app.dto.UserRequest;
 import com.ecom.app.dto.UserResponse;
-import com.ecom.app.model.User;
 import com.ecom.app.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,9 +25,9 @@ public class UserController {
                 HttpStatus.OK);
     }
 
-//    @PostMapping
-//    public ResponseEntity<String> saveUser(@RequestBody User user) {
-//        userService.addUser(user);
-//        return ResponseEntity.ok("User added successfully");
-//    }
+    @PostMapping
+    public ResponseEntity<String> saveUser(@RequestBody UserRequest userRequest) {
+        userService.addUser(userRequest);
+        return ResponseEntity.ok("User added successfully");
+    }
 }
