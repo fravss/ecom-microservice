@@ -1,4 +1,4 @@
-package com.ecom.app.service.CartService;
+package com.ecom.app.service;
 
 import com.ecom.app.dto.CartItemRequest;
 import com.ecom.app.model.CartItem;
@@ -73,5 +73,9 @@ public class CartService {
 
     public List<CartItem> getCart(String userId) {
         return cartItemRepository.findByUserId(Long.valueOf(userId));
+    }
+
+    public void clearCart(String userId) {
+        userRepository.findById(Long.valueOf(userId)).ifPresent(cartItemRepository::deleteByUser);
     }
 }

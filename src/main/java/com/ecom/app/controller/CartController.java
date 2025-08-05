@@ -3,7 +3,7 @@ package com.ecom.app.controller;
 
 import com.ecom.app.dto.CartItemRequest;
 import com.ecom.app.model.CartItem;
-import com.ecom.app.service.CartService.CartService;
+import com.ecom.app.service.CartService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -16,4 +16,5 @@ public interface CartItemRepository extends CrudRepository<CartItem, Long> {
 
     List<CartItem> findByUserId(Long user_id);
 
+    void deleteByUser(User user);
 }
