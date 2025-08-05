@@ -7,6 +7,7 @@ import com.ecom.app.model.User;
 import com.ecom.app.repository.CartItemRepository;
 import com.ecom.app.repository.ProductRepository;
 import com.ecom.app.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class CartService {
     private final ProductRepository productRepository;
     private final CartItemRepository cartItemRepository;
@@ -50,5 +52,21 @@ public class CartService {
             cartItemRepository.save(cartItem);
         }
         return true;
+    }
+
+
+    public boolean deleteItemFromCart(String userId, Long productId) {
+        Optional<Product> productOpt = productRepository.findById(productId);
+        Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
+
+        if (productOpt.isPresent() && userOpt.isPresent()) {
+            CartItem existingCartItem = cartItemRepository.findByUserAndProduct(userOpt.get(), productOpt.get());
+            if(existingCartItem != null) {
+                cartItemRepository.deleteByUserAndProduct(userOpt.get(), productOpt.get());
+                return true;
+            }
+        }
+
+        return false;
     }
 }
