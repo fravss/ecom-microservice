@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,6 +35,6 @@ public class Order {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 }
