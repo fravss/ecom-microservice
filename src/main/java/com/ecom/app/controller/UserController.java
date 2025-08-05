@@ -39,4 +39,11 @@ public class UserController {
             return ResponseEntity.ok("User updated successfully");
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUser(@PathVariable String id){
+        return userService.getUserById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

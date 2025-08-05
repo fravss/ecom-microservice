@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -22,6 +23,12 @@ public class UserService {
                 .stream()
                 .map(this::mapToUserResponse)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<UserResponse> getUserById(String id) {
+        return userRepository.findById(Long.valueOf(id))
+                .map(this::mapToUserResponse);
+
     }
 
     public void addUser(UserRequest userRequest){
