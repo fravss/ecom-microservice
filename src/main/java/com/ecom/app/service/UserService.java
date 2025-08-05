@@ -31,6 +31,15 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public boolean updateUser(String id, UserRequest updatedUserRequest) {
+        return userRepository.findById(Long.valueOf(id))
+                .map(existingUser -> {
+                    updateUserFromRequest(existingUser, updatedUserRequest);
+                    userRepository.save(existingUser);
+                    return true;
+                }).orElse(false);
+    }
+
     public UserResponse mapToUserResponse(User user){
         UserResponse userResponse = new UserResponse();
         userResponse.setId(String.valueOf(user.getId()));
