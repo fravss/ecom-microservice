@@ -11,3 +11,14 @@ eureka:
     fetch-registry: false
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: shutdown
+  endpoint:
+    shutdown:
+      enabled: true
+
+
+
