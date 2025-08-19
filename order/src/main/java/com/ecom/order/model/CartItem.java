@@ -18,7 +18,7 @@ public class CartItem {
     private Long id;
 
 
-    private Long userId;
+    private String userId;
 
     private Long productId;
 

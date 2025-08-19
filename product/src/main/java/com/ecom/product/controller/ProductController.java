@@ -4,6 +4,7 @@ import com.ecom.product.dto.ProductRequest;
 import com.ecom.product.dto.ProductResponse;
 import com.ecom.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,16 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
+    @Value("${server.port}")
+    private String port;
+
     private final ProductService productService;
+
+    @GetMapping("/instance")
+    public String getInfo() {
+        System.out.println("At port " + port);
+        return "Instance at port: " + port;
+    }
 
     @PostMapping
     public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest productRequest) {
