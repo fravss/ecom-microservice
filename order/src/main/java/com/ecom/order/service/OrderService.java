@@ -1,6 +1,9 @@
 package com.ecom.order.service;
 
-import com.ecom.order.model.*;
+import com.ecom.order.clients.UserServiceClient;
+
+import com.ecom.order.dto.UserResponse;
+
 import com.ecom.order.dto.OrderItemDTO;
 import com.ecom.order.dto.OrderResponse;
 import com.ecom.order.model.OrderItem;
@@ -20,6 +23,7 @@ import java.util.Optional;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final CartService cartService;
+    private final UserServiceClient userServiceClient;
 
     public Optional<OrderResponse> createOrder(String userId) {
         List<CartItem> cartItems = cartService.getCart(userId);
@@ -27,15 +31,16 @@ public class OrderService {
             return Optional.empty();
         }
 
-//        Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
-//        if (userOpt.isEmpty()){
-//            return Optional.empty();
-//        }
-//        User user = userOpt.get();
+        UserResponse userResponse = userServiceClient.getUserById(userId);
+
+        if (userResponse == null){
+            return Optional.empty();
+        }
+
         BigDecimal totalPrice = cartItems.stream().map(CartItem::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         Order order = new Order();
-        order.setUserId(Long.valueOf(userId));
+        order.setUserId(userId);
         order.setStatus(OrderStatus.CONFIRMED);
         order.setAmount(totalPrice);
         List<OrderItem> orderItems = cartItems.stream()
